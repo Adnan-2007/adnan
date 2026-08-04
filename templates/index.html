@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ADNAN | Link in Bio</title>
+    <!-- استيراد الفونتات الفخمة من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Grand+Hotel&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: #000000;
+        }
+
+        body {
+            color: #f8fafc;
+            font-family: Tahoma, sans-serif;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* تأثير أوراق الورد الحمراء المتساقطة */
+        .petal {
+            position: fixed;
+            background: #dc2626;
+            border-radius: 150% 0 150% 0;
+            animation: fallPetals linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.75;
+            box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+        }
+
+        @keyframes fallPetals {
+            0% {
+                transform: translateY(-50px) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) translateX(50px);
+                opacity: 0.2;
+            }
+        }
+
+        /* كومة أوراق الورد في الأسفل */
+        .petals-pile {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background: radial-gradient(ellipse at bottom, rgba(220, 38, 38, 0.7) 0%, rgba(153, 27, 27, 0.35) 45%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+
+        #main-content {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 400px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .profile-wrapper {
+            position: relative;
+            margin: 0 auto 20px;
+            display: inline-block;
+        }
+
+        /* نيون أحمر ورا الصورة */
+        .profile-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: -7px;
+            right: -7px;
+            bottom: -7px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.45), rgba(220, 38, 38, 0.15));
+            filter: blur(14px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: pulseRed 3s infinite alternate;
+        }
+
+        @keyframes pulseRed {
+            0% { transform: scale(0.95); opacity: 0.4; }
+            100% { transform: scale(1.03); opacity: 0.7; }
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            background: #111;
+            border-radius: 50%;
+            border: 3px solid #333;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+            background-image: url('/static/img.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 { color: #f8fafc; font-size: 28px; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(255,255,255,0.2); }
+        p.bio { color: #94a3b8; font-size: 15px; margin-bottom: 30px; font-weight: bold; }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* تعديل الأزرار لتصير أصغر حجماً بـ 25% وأكثر طولية */
+        .link-btn {
+            position: relative;
+            overflow: hidden;
+            color: white;
+            padding: 16px 10px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-size: 18px;
+            width: 100%;
+            max-width: 240px; /* تقليص العرض لتصير طولية وأنيقة */
+            text-align: center;
+            display: block;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .link-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* تخصيص الفونتات لكل زر */
+        .github-font {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .insta-font {
+            font-family: 'Grand Hotel', cursive;
+            font-size: 24px;
+        }
+
+        .threads-font {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* نيونات الأزرار */
+        .github-btn {
+            box-shadow: 0 0 16px rgba(22, 163, 74, 0.3);
+        }
+        .github-btn:hover {
+            box-shadow: 0 0 22px rgba(22, 163, 74, 0.5);
+        }
+
+        .insta-btn {
+            box-shadow: 0 0 18px rgba(225, 48, 108, 0.55);
+        }
+        .insta-btn:hover {
+            box-shadow: 0 0 26px rgba(225, 48, 108, 0.8);
+        }
+
+        .threads-btn {
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.2);
+        }
+        .threads-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+        }
+
+        .mini-ripple {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(239, 68, 68, 0.8);
+            background: rgba(239, 68, 68, 0.25);
+            transform: scale(0);
+            animation: mini-ripple-effect 0.45s cubic-bezier(0, 0.5, 0.5, 1);
+            pointer-events: none;
+            width: 35px;
+            height: 35px;
+            z-index: 999;
+        }
+
+        @keyframes mini-ripple-effect {
+            0% { transform: scale(0.2); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="petals-pile"></div>
+
+    <div id="main-content">
+        <div class="profile-wrapper">
+            <div class="profile-img"></div>
+        </div>
+        <h1>ADNAN</h1>
+        <p class="bio">طبعا انا سويته لا داعي للمدح 😻</p>
+
+        <div class="links-container">
+            <!-- زر GitHub (لوقو أبيض وأسود ورا الكلام) -->
+            <a href="https://github.com/adnan-2007" target="_blank" class="link-btn github-btn">
+                <span class="github-font" style="position: relative; z-index: 2;">GitHub</span>
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000 url('/static/github_logo.jfif') no-repeat center/cover; opacity: 0.35; z-index: 1;"></div>
+            </a>
+
+            <!-- زر Instagram (لوقو أبيض وأسود ورا الكلام) -->
+            <a href="https://instagram.com/3oam_7" target="_blank" class="link-btn insta-btn">
+                <span class="insta-font" style="position: relative; z-index: 2;">Instagram</span>
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000 url('/static/insta_black.jpg') no-repeat center/cover; opacity: 0.35; z-index: 1;"></div>
+            </a>
+
+            <!-- زر Threads -->
+            <a href="https://www.threads.net/@3oam_7" target="_blank" class="link-btn threads-btn">
+                <span class="threads-font" style="position: relative; z-index: 2;">Threads</span>
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://api.iconify.design/ri:threads-fill.svg?color=white') no-repeat center/contain; opacity: 0.3; z-index: 1;"></div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const petalsCount = 25;
+            for (let i = 0; i < petalsCount; i++) {
+                let petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.style.left = Math.random() * window.innerWidth + 'px';
+                petal.style.top = -50 + 'px';
+                let size = 10 + Math.random() * 12;
+                petal.style.width = size + 'px';
+                petal.style.height = size * 1.3 + 'px';
+                petal.style.animationDuration = (3.5 + Math.random() * 4) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                document.body.appendChild(petal);
+            }
+        });
+
+        window.onload = function() {
+            const mainContent = document.getElementById('main-content');
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+            }, 150);
+        };
+
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.link-btn')) return;
+
+            let circle = document.createElement('div');
+            circle.classList.add('mini-ripple');
+            document.body.appendChild(circle);
+
+            circle.style.left = `${e.clientX - 17}px`;
+            circle.style.top = `${e.clientY - 17}px`;
+
+            setTimeout(() => {
+                circle.remove();
+            }, 450);
+        });
+    </script>
+</body>
+</html>
